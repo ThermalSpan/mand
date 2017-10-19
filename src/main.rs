@@ -11,20 +11,6 @@ mod camera;
 mod plane;
 mod viewer;
 
-#[derive(PartialEq)]
-enum MainState {
-    Camera,
-    Plane,
-}
-
-#[derive(Copy, Clone)]
-struct Vertex {
-    position: [f32; 2],
-    tex_coords: [f32; 2],
-}
-
-implement_vertex!(Vertex, position, tex_coords);
-
 fn main() {
     let args = args_and_usage::parse_args();
 

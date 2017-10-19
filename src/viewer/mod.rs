@@ -32,13 +32,13 @@ pub struct Viewer<'a> {
 impl <'a> Viewer<'a> {
     pub fn new(width: u32, height: u32, display: &'a Display) -> Viewer<'a> {
         // Initialize the camera
-        let mut cam = camera::Camera::new();
+        let cam = camera::Camera::new();
 
         // Initiliaze the plane
-        let mut plane = plane::Plane::new(100.0f32, width, height, display);
+        let plane = plane::Plane::new(100.0f32, width, height, display);
 
         // The main state
-        let mut main_state = MainState::Camera;
+        let main_state = MainState::Camera;
 
 
         Viewer {
@@ -107,7 +107,7 @@ impl <'a> Viewer<'a> {
     }
 
     fn handle_event(&mut self, target_width: u32, target_height: u32, event: Event) {
-        if let Event::WindowEvent{window_id: id, event: event} = event {
+        if let Event::WindowEvent{window_id: _, event} = event {
             match  event {
                 WindowEvent::Closed => process::exit(0),
                 WindowEvent::MouseWheel{ device_id: _, delta: MouseScrollDelta::PixelDelta(_, y), phase: _} => {
@@ -116,7 +116,7 @@ impl <'a> Viewer<'a> {
                         MainState::Plane  => self.plane.handle_mouse_scroll(y),
                     };
                 },
-                WindowEvent::MouseInput{ device_id: _, state: button_state, button: button} => {
+                WindowEvent::MouseInput{ device_id: _, state: button_state, button} => {
                     match self.state {
                         MainState::Camera => self.cam.handle_mouse_click(button_state, button),
                         MainState::Plane  => self.plane.handle_mouse_click(button_state, button),
@@ -129,7 +129,7 @@ impl <'a> Viewer<'a> {
                     };
                 },
                 WindowEvent::KeyboardInput{ device_id: _, input: keyboard_input} => {
-                    let KeyboardInput{scancode: _, state: state, virtual_keycode: code, modifiers: _} = keyboard_input;
+                    let KeyboardInput{scancode: _, state, virtual_keycode: code, modifiers: _} = keyboard_input;
                     match (state, code) {
                         (ElementState::Pressed, Some(VirtualKeyCode::F)) => {
                             self.state = MainState::Plane; 

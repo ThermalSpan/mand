@@ -151,12 +151,12 @@ impl Plane {
         }
     }
 
-    pub fn handle_mouse_scroll (&mut self, y: f32) {
+    pub fn handle_mouse_scroll (&mut self, _y: f32) {
 
 
     }
 
-    pub fn handle_mouse_move (&mut self, x: f64, y: f64, w: u32, h: u32) {
+    pub fn handle_mouse_move (&mut self, x: f64, y: f64, _w: u32, h: u32) {
         self.mouse_pos = Vector2::new(x as f32, h as f32 - y as f32);
     
         if self.state == PlaneState::Drag {
