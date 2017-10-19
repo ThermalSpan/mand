@@ -26,7 +26,7 @@ fn main() {
     // Make the window builder
     let window_builder = glium::glutin::WindowBuilder::new()
         .with_dimensions(starting_width / 2, starting_height / 2)
-        .with_title(format!("mand"));
+        .with_title("mand");
 
     // Now we put them together to make the display
     let display = Display::new(window_builder, context_builder, &events_loop).unwrap();

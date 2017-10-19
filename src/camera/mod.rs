@@ -64,7 +64,7 @@ impl Camera {
             },
             (CameraState::Tumble, ElementState::Released, MouseButton::Right) => {
                 // When leaving tumble mode, compose the delta to current and zero it
-                self.angle = self.angle * self.angle_delta;
+                self.angle *= self.angle_delta;
                 self.angle_delta = Complex::new(1.0, 0.0);
                 CameraState::Rest
             },
@@ -159,7 +159,7 @@ impl Camera {
         };
 
         let matrix: [[f32; 3]; 3] =
-            (*&camera_translation * &camera_rotation * &camera_scale * &camera_perspective).into();
+            (camera_translation * camera_rotation * camera_scale * camera_perspective).into();
         matrix
     }
 }

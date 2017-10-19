@@ -67,7 +67,7 @@ impl Plane {
         let vertex_shader_src = include_str!("shape_shader.vert");
         let fragment_shader_src = include_str!("shape_shader.frag");
         let shader_program =
-            Program::from_source(display, &vertex_shader_src, &fragment_shader_src, None).unwrap();
+            Program::from_source(display, vertex_shader_src, fragment_shader_src, None).unwrap();
 
         Plane {
             state: PlaneState::Rest,

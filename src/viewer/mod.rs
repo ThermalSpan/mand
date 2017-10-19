@@ -62,7 +62,7 @@ impl<'a> Viewer<'a> {
         let vertex_shader_src = include_str!("../_shaders/vertex_shader.vert");
         let fragment_shader_src = include_str!("../_shaders/fragment_shader.frag");
         let shader_program =
-            Program::from_source(self.display, &vertex_shader_src, &fragment_shader_src, None)
+            Program::from_source(self.display, vertex_shader_src, fragment_shader_src, None)
                 .unwrap();
 
         // We need a quad (two triangled) to cover the enitire screen
@@ -139,37 +139,26 @@ impl<'a> Viewer<'a> {
         target_height: u32,
         event: Event,
     ) {
-        if let Event::WindowEvent {
-            window_id: _,
-            event,
-        } = event
-        {
+        if let Event::WindowEvent { event, .. } = event {
             match event {
                 WindowEvent::Closed => process::exit(0),
-                WindowEvent::MouseWheel {
-                    device_id: _,
-                    delta: MouseScrollDelta::PixelDelta(_, y),
-                    phase: _,
-                } => {
+                WindowEvent::MouseWheel { delta: MouseScrollDelta::PixelDelta(_, y), .. } => {
                     match self.state {
                         MainState::Camera => self.cam.handle_mouse_scroll(y),
                         MainState::Plane => self.plane.handle_mouse_scroll(y),
                     };
                 },
                 WindowEvent::MouseInput {
-                    device_id: _,
                     state: button_state,
                     button,
+                    ..
                 } => {
                     match self.state {
                         MainState::Camera => self.cam.handle_mouse_click(button_state, button),
                         MainState::Plane => self.plane.handle_mouse_click(button_state, button),
                     };
                 },
-                WindowEvent::MouseMoved {
-                    device_id: _,
-                    position: (x, y),
-                } => {
+                WindowEvent::MouseMoved { position: (x, y), .. } => {
                     match self.state {
                         MainState::Camera => {
                             self.cam.handle_mouse_move(
@@ -189,15 +178,11 @@ impl<'a> Viewer<'a> {
                         },
                     };
                 },
-                WindowEvent::KeyboardInput {
-                    device_id: _,
-                    input: keyboard_input,
-                } => {
+                WindowEvent::KeyboardInput { input: keyboard_input, .. } => {
                     let KeyboardInput {
-                        scancode: _,
                         state,
                         virtual_keycode: code,
-                        modifiers: _,
+                        ..
                     } = keyboard_input;
                     match (state, code) {
                         (ElementState::Pressed, Some(VirtualKeyCode::F)) => {
