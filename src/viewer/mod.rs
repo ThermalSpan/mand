@@ -27,11 +27,10 @@ pub struct Viewer<'a> {
     cam: camera::Camera,
     plane: plane::Plane,
     display: &'a Display,
-    events_loop: &'a mut EventsLoop
 }
 
 impl <'a> Viewer<'a> {
-    pub fn new(width: u32, height: u32, display: &'a Display, events: &'a mut EventsLoop) -> Viewer<'a> {
+    pub fn new(width: u32, height: u32, display: &'a Display) -> Viewer<'a> {
         // Initialize the camera
         let mut cam = camera::Camera::new();
 
@@ -47,11 +46,10 @@ impl <'a> Viewer<'a> {
             plane: plane,
             state: main_state,
             display: display,
-            events_loop: events
         }
     }
 
-    pub fn run(mut self) {
+    pub fn run(mut self, events_loop: &mut EventsLoop) {
         // We statically include the shader sources, and build the shader program
         let vertex_shader_src = include_str!("../_shaders/vertex_shader.vert");
         let fragment_shader_src = include_str!("../_shaders/fragment_shader.frag");
@@ -83,7 +81,7 @@ impl <'a> Viewer<'a> {
 
             // Handle all the window events / user input
             let (w, h) = target.get_dimensions();
-            self.events_loop.poll_events(|e| self.handle_event(w, h, e));
+            events_loop.poll_events(|e| self.handle_event(w, h, e));
 
             let uniforms = uniform! {
                 // Note that window resize events don't work, so we have to poll the dimensions. 

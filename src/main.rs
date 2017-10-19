@@ -54,9 +54,8 @@ fn main() {
         starting_width,
         starting_height,
         &display,
-        &mut events_loop
     );
     
     // let it run
-    viewer.run();
+    viewer.run(&mut events_loop);
 }
