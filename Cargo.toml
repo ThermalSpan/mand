@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Russell Bentley <russell.w.bentley@icloud.com>"]
 
 [dependencies]
-glium = "*"
+glium = { git = "https://github.com/ThermalSpan/glium" }
 cgmath = "*"
 num = "*"
 num-complex = "*"

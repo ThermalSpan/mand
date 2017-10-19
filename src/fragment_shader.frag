@@ -10,13 +10,13 @@ void main() {
    int iter_max = 100;
     vec2 c = vec2(camera_transform * vec3(tex, 1.0));
 
-    vec2 z = vec2(0.0, 0.0);
+    vec2 f_c = vec2(0.0, 0.0);
     int iteration = 0;
     while (iteration < iter_max) {
-        float x = z.x * z.x - z.y * z.y;
-        float y = 2.0 * z.x * z.y;
-        z = vec2(x + c.x, y + c.y);
-        if (z.x * z.x + z.y + z.y > 4.0) {
+        float x = f_c.x * f_c.x - f_c.y * f_c.y;
+        float y = 2.0 * f_c.x * f_c.y;
+        f_c = vec2(x + c.x, y + c.y);
+        if (f_c.x * f_c.x + f_c.y + f_c.y > 4.0) {
             break;
         }
         iteration++;

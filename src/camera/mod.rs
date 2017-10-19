@@ -3,9 +3,8 @@ extern crate glium;
 extern crate num;
 
 use glium::glutin::{ElementState, MouseButton};
-use cgmath::{Vector2, Vector3, Matrix2, Matrix3, Rad, SquareMatrix};
+use cgmath::{Vector2, Vector3, Matrix3, SquareMatrix};
 use self::num::complex::Complex;
-use self::num::traits::Zero;
 
 #[derive(Debug, Clone, Copy)]
 enum CameraState {
@@ -65,7 +64,7 @@ impl Camera {
             (CameraState::Rest,   ElementState::Pressed,  MouseButton::Left)  => CameraState::Pan,
             (CameraState::Rest,   ElementState::Pressed,  MouseButton::Right) => CameraState::Tumble,
             
-            // Here we leave either Pan, or Tumble moder
+            // Here we leave either Pan, or Tumble mode
             (CameraState::Pan,    ElementState::Released, MouseButton::Left)  => {
                 // When leaving Pan mode, add the delta to current and zero it
                 self.center += self.pan_delta;
@@ -80,17 +79,17 @@ impl Camera {
             },
 
             // This is a catch all for unexpected transitions                
-            (current_camera_state, button_state, button) => {
+            (state, button_state, button) => {
                 println!("ERROR: camera encountered unexpected transition: {:?} -> ({:?}, {:?})", 
-                         self.state, button_state, button);
+                         state, button_state, button);
                 self.state
             },
         };
     }
 
-    pub fn handle_mouse_move (&mut self, x: i32, y: i32, w: u32, h: u32) {
+    pub fn handle_mouse_move (&mut self, x: f64, y: f64, w: u32, h: u32) {
         let new_mouse_location = Vector2 {x: x as f32, y: y as f32};
-        let mut mouse_delta = self.old_mouse_location - new_mouse_location;
+        let mouse_delta = self.old_mouse_location - new_mouse_location;
         match self.state {
             CameraState::Pan => {
                 let camera_scale_inverse = Matrix3::from_diagonal(Vector3::new(
