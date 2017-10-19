@@ -9,7 +9,7 @@ static VERSION: &'static str = env!("CARGO_PKG_VERSION");
 #[derive(Debug)]
 pub struct Args {
     pub win_width: u32,
-    pub win_height: u32
+    pub win_height: u32,
 }
 
 pub fn parse_args() -> Args {
@@ -23,7 +23,7 @@ pub fn parse_args() -> Args {
                 .long("win-width")
                 .value_name("w")
                 .default_value("2048")
-                .takes_value(true)
+                .takes_value(true),
         )
         .arg(
             Arg::with_name("WIN_HEIGHT")
@@ -33,10 +33,10 @@ pub fn parse_args() -> Args {
                 .default_value("2048")
                 .required(true),
         )
-       .get_matches();
+        .get_matches();
 
     Args {
         win_width: str::parse(args.value_of("WIN_WIDTH").unwrap()).unwrap(),
-        win_height: str::parse(args.value_of("WIN_HEIGHT").unwrap()).unwrap()
+        win_height: str::parse(args.value_of("WIN_HEIGHT").unwrap()).unwrap(),
     }
 }
